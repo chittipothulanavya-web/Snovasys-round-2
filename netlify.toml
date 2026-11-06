@@ -6,6 +6,9 @@
 [build.environment]
   NODE_VERSION = "22"
 
+[functions]
+  external_node_modules = ["vite", "better-sqlite3"]
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
