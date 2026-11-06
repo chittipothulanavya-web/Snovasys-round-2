@@ -1,0 +1,6 @@
+{
+  "name": "LedgerLine - Immutable Double-Entry Core & Concurrency Proof Engine",
+  "description": "An atomic, tamper-evident double-entry banking ledger with strict idempotency, race condition prevention, cryptographic hash chaining, and real-time auditability.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
