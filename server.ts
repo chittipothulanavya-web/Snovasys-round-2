@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename);
 // Initialize DB schema & seed data
 initDatabase();
 
-async function startServer() {
+export async function startServer(options: { listen?: boolean } = {}) {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
@@ -40,7 +40,8 @@ async function startServer() {
 
   // --- Authentication Routes ---
   app.post('/api/auth/register', (req, res) => {
-    const { name, email, password, role = 'account_holder' } = req.body;
+    const { name, email, password } = req.body;
+    const role = 'account_holder';
     if (!name || !email || !password) {
       return res.status(400).json({ error: 'Name, email, and password are required.' });
     }
@@ -529,9 +530,15 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[LedgerLine] Core Banking & Audit Engine listening on port ${PORT}`);
-  });
+  if (options.listen !== false) {
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`[LedgerLine] Core Banking & Audit Engine listening on port ${PORT}`);
+    });
+  }
+
+  return app;
 }
 
-startServer();
+if (process.env.NETLIFY !== 'true') {
+  startServer();
+}

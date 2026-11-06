@@ -1,5 +1,31 @@
 # LedgerLine: Core Banking & Concurrency-Proof Double-Entry Ledger
 
+## Netlify Deployment
+
+The repository now contains Netlify build and `/api/*` function configuration.
+Before deploying the app, create the Supabase and Netlify Database resources, set
+their environment variables, and replace the remaining SQLite-backed server path
+with the hosted PostgreSQL implementation:
+
+```text
+SUPABASE_URL
+SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+NETLIFY_DATABASE_URL
+VITE_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY
+```
+
+Build and deploy:
+
+```bash
+npm install
+npm run build
+npx netlify login
+npx netlify init
+npx netlify deploy --prod
+```
+
 LedgerLine is an institutional-grade, concurrency-safe double-entry banking and ledger system. It enforces mathematical conservation of money, exact-once idempotency semantics, strict role-based access control, append-only cryptographic tamper-evidence, and comprehensive audit statements that record both posted transactions and refused attempts.
 
 ---

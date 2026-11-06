@@ -115,9 +115,11 @@ export function authMiddleware(req: AuthenticatedRequest, _res: Response, next: 
     }
   }
 
-  // 2. Fallback to userId header / token if matching a direct user id (for backward-compatibility with tests)
+  // 2. Local-development compatibility fallback only.
   if (!req.user) {
-    const directId = userIdHeader || (token?.startsWith('usr-') ? token : null) || (typeof req.query.userId === 'string' ? req.query.userId : null);
+    const directId = process.env.NETLIFY !== 'true'
+      ? userIdHeader || (token?.startsWith('usr-') ? token : null) || (typeof req.query.userId === 'string' ? req.query.userId : null)
+      : null;
     if (directId) {
       const user = getUserById(directId);
       if (user) {
