@@ -1,5 +1,4 @@
 import express from 'express';
-import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { initDatabase, db, hashPassword, generateSalt } from './src/server/db.js';
@@ -518,6 +517,7 @@ export async function startServer(options: { listen?: boolean } = {}) {
 
   // --- Vite & Frontend Integration ---
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true, host: '0.0.0.0', port: PORT },
       appType: 'spa',
